@@ -1,0 +1,28 @@
+h2 {
+  margin: 48px 0px 12px 0px;
+}
+
+h3 {
+  margin: 24px 0px 12px 0px;
+}
+
+h4 {
+margin: 24px 0px 8px 0px;
+}
+
+table {
+  margin: 8px 0px 24px 0px;
+}
+
+td {
+  padding: 4px 8px 4px 0px;
+}
+
+td.parameter-name {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 16px;
+  font-style: italic;
+}
