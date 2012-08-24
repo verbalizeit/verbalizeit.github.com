@@ -66,20 +66,48 @@
     <div class="container">
 		<section id="gridSystem">
 			
+			<div class='span9'>
 			<h1>The VerbalizeIt API</h1>
 			
-			<br/><h2>Live Speech-to-Speech Translation</h2>
-			<p>
-				Provide access to live translators directly from your application.
-				Connect through a standard phone call or SIP voice call.
-			</p>
+			<br/><h2>Getting Started</h2>
+			Integrating VerbalizeIt translations into your application is easy. Quickly access live translators or post translation jobs.  			
+			<br/><br/>The API is currently in beta. <a href="http://www.verbalizeit.com/developer/get_access" target="_blank">Request API access to get started.</a>
+			<br/><br/>
 			
-			<br/><h2>Batch Translation Tasks</h2>
+			<br/><h2>Live Speech-to-Speech Translation</h2>
+			<div>
+				<p>Provide access to live translators directly from your application over either voice or data connections. There are several ways to access a live translator:</p><br/>
+				
+				<div class='span7' style='clear:both;'>
+					<h3>SIP - Session Initiation Protocol</h3>
+					<p>SIP can be easily integrated into a browser or mobile app using the <a href="http://phono.com/" target="_blank">Phono library</a></p>
+					<ol>
+						<li><strong><a href="api.html#live_translation_requests">Post a Live Translation Request</a></strong> with the desired language. The API will respond with a SIP number to dial.</li>
+						<li><strong>Dial the number</strong> with your SIP client.</li>
+					</ol><br/><br/>
+	
+					<h3>Telephone - Developer Numbers</h3>
+					<p>Make a phone call to one of our developer numbers. Your application will first need to register the call so we can identify the caller and language.</p>
+					<ol>
+						<li><strong><a href="api.html#live_translation_requests">Post a Live Translation Request</a></strong> with the desired language and the phone number you will be calling from. The API will respond with a telephone number that is expecting the call.</li>
+						<li><strong>Dial the number</strong> with your telephone or phone client.</li>
+					</ol><br/><br/>
+	
+					<h3>Telephone - Direct Access</h3>
+					<p>VerbalizeIt provides direct phone numbers to applications that need to dial in to translation services without any HTTP requests. This is especially useful for products used internationally where data connections may be unreliable.</p>
+					<ol>
+						<li><strong>Dial the direct access number</strong> with your telephone or phone client.</li>
+					</ol>
+				</div>
+				<div style='clear: both;'></div>
+			</div>			
+			
+			<br/><br/><h2>Batch Translation Tasks</h2>
 			<p>
 				Easily translate your existing content- audio, text, video- into the language of your choice.  
 				Upload a variety of standard formats to our system, and receive translated content back.
 			</p>																			
-			
+			</div>
 		</section>
     </div> <!-- /container -->
 

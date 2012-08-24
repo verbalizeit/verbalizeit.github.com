@@ -72,14 +72,17 @@
 					<button class="btn btn-primary" id="request-api-key-button" style="width:250px;height:50px;font-size:18px;">Request an API Key</button>
 				</div>
 				<div class="span6">
-					<img src="http://placehold.it/525x250"></img>
+					<!-- <img src="http://placehold.it/525x250"></img> -->
 				</div>
 			</div><!-- /row -->
 			
 			<div class="row" style="padding-top:30px;">
 				<div class="span6">
-					The VerbalizeIt API allows your application to access the same translation capabilities as our own apps. Provide live, human translation directly in your apps, or upload your own content for audio, text, or video translation.				
+					<p>The VerbalizeIt API allows your application to access the same translation capabilities as our own apps. Provide live, human translation directly in your apps, or upload your own content for audio, text, or video translation.</p>
+					
+					<p><a href="docs/index.html">Get started using the VerbalizeIt API</a></p>				
 				</div>
+				<!--
 				<div class="span6">
 					<h3>Learn more about...</h3>
 						<ul style="list-style:none;font-size:16px;">
@@ -88,6 +91,7 @@
 							<li style="margin-top:10px;"><i class="icon-comment" style="margin-right:10px;"></i>Live Speech-to-Speech Translation</li>
 						</ul>
 				</div>
+				-->
 			<div>
 		</section>
 
@@ -120,7 +124,7 @@
 			$('.dropdown-toggle').dropdown();
 			
 			$( "#request-api-key-button" ).click( function() {
-				window.location = "https://www.verbalizeit.com/developer/get_access"
+				window.open( "https://www.verbalizeit.com/developer/get_access", '_newtab');
 			} );
 			
 		});
