@@ -69,7 +69,7 @@
 				<div class="span6">
 					<p style="font-size:50px;line-height:60px;">There are no language barriers for your applications</h1>
 					<br>
-					<button class="btn btn-primary" style="width:250px;height:50px;font-size:18px;">Request an API Key</button>
+					<button class="btn btn-primary" id="request-api-key-button" style="width:250px;height:50px;font-size:18px;">Request an API Key</button>
 				</div>
 				<div class="span6">
 					<img src="http://placehold.it/525x250"></img>
@@ -118,7 +118,13 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$('.dropdown-toggle').dropdown();
+			
+			$( "#request-api-key-button" ).click( function() {
+				window.location = "https://www.verbalizeit.com/developer/get_access"
+			} );
+			
 		});
+				
 	</script>
 
   </body>
