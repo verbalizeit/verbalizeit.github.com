@@ -217,8 +217,8 @@
 
 
 
-<h2>Live Speech-to-Speech Translation Requests</h2>
-<p>Before calling a translator, the app must make a request for a translator. This allows the system to properly identify the user and language for translation when the call is received.</p>
+<h2>Live Speech-to-Speech Translations</h2>
+<p>Before making a telephone call to a translator, the app must make a request for a translator. This allows the system to properly identify the user and language for translation when the call is received.</p>
 
 <a name="live_translation_requests"></a>
 <h3>Create a live translation request</h3>
@@ -249,6 +249,19 @@
 {}
 </pre>
 		
+<a name="live_translation_requests_sip_number"></a>		
+<h3>Get SIP number</h3>
+<p class='method-path'>/live_translation_requests/sip_number - GET</p>
+<table>
+	<tr><td class='parameter-name'>api_key</td><td>App API key; Required; Alternately X-API-KEY header</td></tr>
+	<tr><td class='parameter-name'>auth_token</td><td>User authentication token; Required; Alternately X-AUTH-TOKEN header</td></tr>
+</table>
+
+<pre>
+{
+  "sip_number":"sip:9995555555@sip.tropo.com"
+}
+</pre>
 		
 		
 		</section>
