@@ -14,6 +14,13 @@
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
+	  .apiDivider {
+		 margin:5px 0;
+		}
+	.apiResourceIndent {
+		margin-left:20px;
+	}
+	  
     </style>
     <link href="../css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -66,71 +73,95 @@
     <div class="container">
 		<section id="gridSystem">
 		
+<h1>Developer API Resources</h1>
+</br>	
+<ul>
+		<li><a href="#languages">Languages</a> - Get a full list of available VerbalizeIt languages.</li>
+		<li><a href="#users">Users</a> - Manage the individual users tied to your application</li>
+			<ul>
+				<li><a href="#create_user">Create User</a> - Create a user associated with your application</li>
+			</ul>
+</ul>		
 		
-<h1>Developer API</h1>		
-		
-<h2>Languages</h2>
-<p>Get a full list of available VerbalizeIt languages. Currently, all translation are between the target language and English</p>
+<a name="languages"></a>
+<h3>Languages</h3>
+<small>Get a full list of available VerbalizeIt languages. Currently, all translation are between the target language and English</small>
+<hr class="apiDivider">
+<div class="apiResourceIndent">
+	<h4>Resource:</h4>
+	<p class="method-path">/languages - GET</p>
 
-<h3>Get list of all available languages for translation</h3>
-<p class='method-path'>/languages - GET</p>
+	<h4>Parameters:</h4>
+	<table>
+		<tr><td class='parameter-name'>api_key</td><td>App API key; Required, unless auth_token is provided; Alternately X-API-KEY header</td></tr>
+		<tr><td class='parameter-name'>auth_token</td><td>User authentication token; Required, unless api_key is provided; Alternately X-AUTH-TOKEN header</td></tr>
+	</table>
+	<h4>Sample Request:</h4>
+	<div class="row">
+	  <div class="span1" style="text-align:center"><strong>GET</strong></div>
+	  <div class="span10">https://api.verbalizeit.com/languages?api_key=YOUR_API_KEY</div>
+	</div>
+	<pre>
+	[{
+	  "name":"Mandarin",
+	  "language_code":"zh"
+	},
+	{
+	  "name":"Hindi",
+	  "language_code":"hi"
+	},
+	{
+	  "name":"Spanish",
+	  "language_code":"es"
+	},...
+	]
+	</pre>
+</div>
+<hr class="apiDivider">	
 
-<h4>Parameters:</h4>
-<table>
-	<tr><td class='parameter-name'>api_key</td><td>App API key; Required, unless auth_token is provided; Alternately X-API-KEY header</td></tr>
-	<tr><td class='parameter-name'>auth_token</td><td>User authentication token; Required, unless api_key is provided; Alternately X-AUTH-TOKEN header</td></tr>
-</table>
-
-<pre>
-[{
-  "name":"Mandarin",
-  "language_code":"zh"
-},
-{
-  "name":"Hindi",
-  "language_code":"hi"
-},
-{
-  "name":"Spanish",
-  "language_code":"es"
-},...
-]
-</pre>
 
 
-
+<a name="users"></a>
 <h2>Users</h2>
 <p>Developers may create individual users tied to their app. Translation minutes can be added to each user individually, and VerbalizeIt will track their call and time usage.</p> 
+<hr class="apiDivider">
 
-<h3>Create an application user</h3>
-<p class='method-path'>/users - POST</p>
+<div class="apiResourceIndent">
+	<a name="create_user"></a>
+	<h3>Create an application user</h3>
+	<h4>Resource:</h4>
+	<p class='method-path'>/users - POST</p>
 
-<h4>Parameters:</h4>
-<table>
-	<tr><td class='parameter-name'>api_key</td><td>App API key; Required; Alternately X-API-KEY header</td></tr>
-	<tr><td class='parameter-name'>phone_number</td><td>User phone number; String; Optional; Must be unique to all users of app</td></tr>
-	<tr><td class='parameter-name'>alternate_id</td><td>Alternate, developer-specified identifier; String; Optional; Must be unique to all users of app</td></tr>
-</table>
-
-<pre>
-{
-  "id":8,
-  "auth_token":"XEHXtHXZnwseAKLNh1Rw",
-  "phone_number":"5555555555"
-  "available_minutes":10
-  "alternate_id":"abc123"
-}
-</pre>
-
+	<h4>Parameters:</h4>
+	<table>
+		<tr><td class='parameter-name'>api_key</td><td>App API key; Required; Alternately X-API-KEY header</td></tr>
+		<tr><td class='parameter-name'>phone_number</td><td>User phone number; String; Optional; Must be unique to all users of app</td></tr>
+		<tr><td class='parameter-name'>alternate_id</td><td>Alternate, developer-specified identifier; String; Optional; Must be unique to all users of app</td></tr>
+	</table>
+	<h4>Sample Request:</h4>
+	<div class="row">
+	  <div class="span1" style="text-align:center"><strong>POST</strong></div>
+	  <div class="span10">https://api.verbalizeit.com/users?api_key=YOUR_API_KEY&phone_number=5555555555&alternate_id=abc123</div>
+	</div>
+	<pre>
+	{
+	  "id":8,
+	  "auth_token":"XEHXtHXZnwseAKLNh1Rw",
+	  "phone_number":"5555555555"
+	  "available_minutes":10,
+	  "alternate_id":"abc123"
+	}
+	</pre>
+</div>
+<hr class="apiDivider">
 
 
 <h3>Update a user</h3>
 <p class='method-path'>/users - PUT</p>
 <h4>Parameters:</h4>
 <table>
-	<tr><td class='parameter-name'>auth_token</td><td>User authentication token; Required, unless api_key is provided; Alternately X-AUTH-TOKEN header</td></tr>
+	<tr><td class='parameter-name'>auth_token</td><td>User authentication token; Required, Alternately X-AUTH-TOKEN header</td></tr>
 	<tr><td class='parameter-name'>phone_number</td><td>User phone number; String; Optional; Must be unique to all users of app</td></tr>
-	<tr><td class='parameter-name'>alternate_id</td><td>Alternate, developer-specified identifier; String; Optional; Must be unique to all users of app</td></tr>
 </table>
 
 <pre>
@@ -139,7 +170,6 @@
   "auth_token":"XEHXtHXZnwseAKLNh1Rw",
   "phone_number":"5555555555"
   "available_minutes":10
-  "alternate_id":"abc123"
 }
 </pre>
 
