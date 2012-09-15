@@ -26,3 +26,11 @@ td.parameter-name {
   font-size: 16px;
   font-style: italic;
 }
+
+.apiDivider {
+ margin:5px 0;
+}
+
+.apiResourceIndent {
+	margin-left:20px;
+}

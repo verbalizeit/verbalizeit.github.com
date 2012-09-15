@@ -69,11 +69,18 @@
     <div class="container">
 		<section id="gridSystem">
 		
-<h1>Developer API Resources</h1>
+		
+<h1>Developer API Resources: Live Translation</h1>
 </br>	
 <ul>
-		<li><a href="#languages">Languages</a> - Get a full list of available VerbalizeIt languages.</li>
-		<li><a href="#users">Users</a> - Manage the individual users tied to your application</li>
+		<li><a href="#live">Live Translation</a> - Initiate live speech-to-speech translaton</li>
+			<ul>
+				<li><a href="#create_live">Create Live Translation</a> - Create a live translation request</li>
+				<li><a href="#cancel_live">Cancel Live Translation</a> - Cancel a live translation request </li>
+				<li><a href="#get_sip">Get SIP number</a> - ?????????????</li>
+			</ul>
+</br>
+		<li><a href="#users">Users</a> - Manage the individual users tied to your live translation application</li>
 			<ul>
 				<li><a href="#create_user">Create User</a> - Create a user associated with your application</li>
 				<li><a href="#user_details">User Details</a> - Show a specific user's details</li>
@@ -83,45 +90,88 @@
 			</ul>
 </ul>		
 		
-<a name="languages"></a>
-<h2>Languages</h2>
-<small>Get a full list of available VerbalizeIt languages. Currently, all translation are between the target language and English</small>
-<hr class="apiDivider">
-<div class="apiResourceIndent">
-	<h4>Resource:</h4>
-	<p class="method-path">/languages - GET</p>
 
+<a name="live"></a>
+<h2>Live Speech-to-Speech Translations</h2>
+<p>Before making a telephone call to a translator, the app must make a request for a translator. This allows the system to properly identify the user and language for translation when the call is received.</p>
+<hr class="apiDivider">
+
+<div class="apiResourceIndent">
+	<a name="create_live"></a>
+	<h3>Create a live translation request</h3>
+	<h4>Resource:</h4>
+	<p class='method-path'>/live_translation_requests - POST</p>
 	<h4>Parameters:</h4>
 	<table>
-		<tr><td class='parameter-name'>api_key</td><td>App API key; Required, unless auth_token is provided; Alternately X-API-KEY header</td></tr>
-		<tr><td class='parameter-name'>auth_token</td><td>User authentication token; Required, unless api_key is provided; Alternately X-AUTH-TOKEN header</td></tr>
+		<tr><td class='parameter-name'>auth_token</td><td>User authentication token; Required; Alternately X-AUTH-TOKEN header</td></tr>
+		<tr><td class='parameter-name'>language</td><td>Language code for translation, found from Get Languages request; String; Required; Example: 'es' for Spanish</td></tr>
+		<tr><td class='parameter-name'>call_method</td><td>Method of calling translator; String; Required; 'sip' for SIP data call, 'telephone' for telephone call</td></tr>
+		<tr><td class='parameter-name'>inbound_number</td><td>Phone number expected to call in for translator; String; Required if call_method is 'telephone';</td></tr>
+	</table>
+	<h4>Sample Request:</h4>
+	<div class="row">
+	  <div class="span1" style="text-align:center"><strong>POST</strong></div>
+	  <div class="span10">https://api.verbalizeit.com/live_translation_requests?auth_token=YOUR_AUTH_TOKEN&language=es&call_method=sip</div>
+	</div>
+	<h4>Sample Response:</h4>
+	<pre>
+	{
+	  "id":10,
+	  "expires_dat":"2012-08-24T14:27:39-04:00",
+	  "phone_number":"sip:9996113258@sip.tropo.com"
+	}
+	</pre>
+</div><!--END apiResourceIndent-->
+<hr class="apiDivider">
+
+
+
+<div class="apiResourceIndent">
+	<a name="cancel_live"></a>
+	<h3>Cancel a live translation request</h3>
+	<h4>Resource:</h4>
+	<p class='method-path'>/live_translation_requests/ [live translation request id] /cancel - PUT</p>
+	<h4>Parameters:</h4>
+	<table>
+		<tr><td class='parameter-name'>auth_token</td><td>User authentication token; Required; Alternately X-AUTH-TOKEN header (See <a href="#users">user documentation</a> below)</td></tr>
+	</table>
+	<h4>Sample Request:</h4>
+	<div class="row">
+	  <div class="span1" style="text-align:center"><strong>PUT</strong></div>
+	  <div class="span10">https://api.verbalizeit.com/live_translation_requests/10/cancel?auth_token=USER_AUTH_TOKEN</div>
+	</div>
+	<h4>Sample Response:</h4>
+	<pre>
+	{}
+	</pre>
+</div><!--END apiResourceIndent-->
+<hr class="apiDivider">
+
+<div class="apiResourceIndent">
+	<a name="get_sip"></a>
+	<h3>Get SIP number</h3>
+	<h4>Resource:</h4>
+	<p class='method-path'>/live_translation_requests/sip_number - GET</p>
+	<h4>Parameters:</h4>
+	<table>
+		<tr><td class='parameter-name'>api_key</td><td>App API key; Required; Alternately X-API-KEY header</td></tr>
+		<tr><td class='parameter-name'>auth_token</td><td>User authentication token; Required; Alternately X-AUTH-TOKEN header</td></tr>
 	</table>
 	<h4>Sample Request:</h4>
 	<div class="row">
 	  <div class="span1" style="text-align:center"><strong>GET</strong></div>
-	  <div class="span10">https://api.verbalizeit.com/languages?api_key=YOUR_API_KEY</div>
+	  <div class="span10">https://api.verbalizeit.com/live_translation_requests/sip_number?api_key=YOUR_API_KEY&auth_token=USER_AUTH_TOKEN</div>
 	</div>
 	<h4>Sample Response:</h4>
 	<pre>
-	[{
-	  "name":"Mandarin",
-	  "language_code":"zh"
-	},
 	{
-	  "name":"Hindi",
-	  "language_code":"hi"
-	},
-	{
-	  "name":"Spanish",
-	  "language_code":"es"
-	},...
-	]
+	  "sip_number":"sip:9995555555@sip.tropo.com"
+	}
 	</pre>
 </div><!--END apiResourceIndent-->
-<hr class="apiSectionDivider">	
-
-
-
+<hr class="apiDivider">	
+		
+		
 <a name="users"></a>
 <h2>Users</h2>
 <p>Developers may create individual users tied to their app. Translation minutes can be added to each user individually, and VerbalizeIt will track their call and time usage.</p> 
@@ -288,54 +338,6 @@
 	</pre>
 </div><!--END apiResourceIndent-->
 <hr class="apiDivider">
-
-
-<h2>Live Speech-to-Speech Translations</h2>
-<p>Before making a telephone call to a translator, the app must make a request for a translator. This allows the system to properly identify the user and language for translation when the call is received.</p>
-
-<a name="live_translation_requests"></a>
-<h3>Create a live translation request</h3>
-<p class='method-path'>/live_translation_requests - POST</p>
-<h4>Parameters:</h4>
-<table>
-	<tr><td class='parameter-name'>auth_token</td><td>User authentication token; Required; Alternately X-AUTH-TOKEN header</td></tr>
-	<tr><td class='parameter-name'>language</td><td>Language code for translation, found from Get Languages request; String; Required; Example: 'es' for Spanish</td></tr>
-	<tr><td class='parameter-name'>call_method</td><td>Method of calling translator; String; Required; 'sip' for SIP data call, 'telephone' for telephone call</td></tr>
-	<tr><td class='parameter-name'>inbound_number</td><td>Phone number expected to call in for translator; String; Required if call_method is 'telephone';</td></tr>
-</table>
-
-<pre>
-{
-  "id":10,
-  "expires_dat":"2012-08-24T14:27:39-04:00",
-  "phone_number":"sip:9996113258@sip.tropo.com"
-}
-</pre>
-
-<h3>Cancel a live translation request</h3>
-<p class='method-path'>/live_translation_requests/<live translation request id>/cancel - PUT</p>
-<table>
-	<tr><td class='parameter-name'>auth_token</td><td>User authentication token; Required; Alternately X-AUTH-TOKEN header</td></tr>
-</table>
-
-<pre>
-{}
-</pre>
-		
-<a name="live_translation_requests_sip_number"></a>		
-<h3>Get SIP number</h3>
-<p class='method-path'>/live_translation_requests/sip_number - GET</p>
-<table>
-	<tr><td class='parameter-name'>api_key</td><td>App API key; Required; Alternately X-API-KEY header</td></tr>
-	<tr><td class='parameter-name'>auth_token</td><td>User authentication token; Required; Alternately X-AUTH-TOKEN header</td></tr>
-</table>
-
-<pre>
-{
-  "sip_number":"sip:9995555555@sip.tropo.com"
-}
-</pre>
-		
 		
 		</section>
     </div> <!-- /container -->
