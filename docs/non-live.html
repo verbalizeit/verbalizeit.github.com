@@ -85,8 +85,9 @@
 		<ul>
 			<li><a href="#get_all_job_envelopes">Get All Jobs</a> - Get all job envelopes</li>
 			<li><a href="#get_task_envelope_by_job">Get Tasks by Job</a> - Get all task envelopes by job</li>
-			<li><a href="#get_all_task_job_status">Get Tasks by Status</a> - Get all tasks in status by job</li>
+			<!--<li><a href="#get_all_task_job_status">Get Tasks by Status</a> - Get all tasks in status by job</li>-->
 			<li><a href="#create_job">Create Job</a> - Create a non-live translation job</li>
+			<li><a href="#get_workflows">Get Workflows</a> - Get workflows of your tasks</li>
 		</ul>
 </ul>		
 		
@@ -102,55 +103,23 @@
 	<small>Get all task envelopes for all statuses</small>
 	<h4>Resource:</h4>
 	<p class='method-path'>/tasks - GET</p>
-
+	<h4>Parameters:</h4>
+	<table>
+		<tr><td class='parameter-name'>api_key (required)</td><td>Your application API key</td></tr>
+		<tr><td class='parameter-name'>date_from (optional)</td><td>"YYYY-MM-DD"</td></tr>
+		<tr><td class='parameter-name'>date_to (optional)</td><td>"YYYY-MM-DD"</td></tr>
+	</table>
 	<h4>Sample Request (URI Parameters or Request Body OK):</h4>
 	<div class="row">
 	  <div class="span1" style="text-align:center"><strong>GET</strong></div>
-	  <div class="span10">https://api.verbalizeit.com/tasks</div>
+	  <div class="span10">https://api.verbalizeit.com/tasks?api_key=YOUR_API_KEY</div>
 	</div>
-	<pre>
-	{
-	api_key : "MY_API_KEY",
-	date_from : "YYYY-MM-DD",		//optional
-	date_to	  : "YYYY-MM-DD",		//optional
-	}
-	</pre>
 	<h4>Sample Response:</h4>
 	<pre>
 	{
-	id: 8,
-	status: complete,
-	api_key : "MY_API_KEY",
-	created_date : "YYYY-MM-DD HH:MM:SS"
-	task_type: "audio_to_text",
-	language : {
-			language_from: "Mandarin",
-			language_from_dialect : "Dialect",
-			language_from_accent  : "Accent",
-			language_to: "Mandarin",
-			language_to_dialect : "Dialect",
-			language_from_accent  : "Accent",
-		}
-	gender {
-		gender_from: "Male"
-		gender_to  : "Male"
-	}
-
-	asset_from : { 
-			file_url: "https://s3.com/file_orig.mp3",
-			file_type: mpeg/audio,
-			gender: "Male"
-			file_size: "10234",
-			file_length_in_minutes, "3",
-			}
-	asset_to : {
-			file_url: "https://s3.com/file_dest.mp3",
-			file_type: "mpeg/audio",
-			gender: "Male"
-			file_size: "10234",
-			file_length_in_minutes, "3",
-			}
-	special_instructions : "some instructions",
+	"id":1,
+	"created_at":"2012-09-21T19:10:12-04:00",
+	"status":"open"
 	}
 	</pre>
 </div><!--END apiResourceIndent-->
@@ -163,58 +132,24 @@
 	<h3>Get all tasks</h3>
 	<small>Get all task envelopes for a specific status</small>
 	<h4>Resource:</h4>
-	<p class='method-path'>/tasks/status - GET</p>
+	<p class='method-path'>/tasks?status=status - GET</p>
+	<h4>Parameters:</h4>
+	<table>
+		<tr><td class='parameter-name'>api_key (required)</td><td>Your application API key</td></tr>
+		<tr><td class='parameter-name'>status (required)</td><td>open, in_progress, in_review, or complete</td></tr>
+	</table>
 
 	<h4>Sample Request (URI Parameters or Request Body OK):</h4>
 	<div class="row">
 	  <div class="span1" style="text-align:center"><strong>GET</strong></div>
-	  <div class="span10">https://api.verbalizeit.com/tasks/status</div>
+	  <div class="span10">https://api.verbalizeit.com/tasks?status=open&api_key=YOUR_API_KEY</div>
 	</div>
-	<pre>
-	{
- 	api_key : "MY_API_KEY",
-	task_id : "1234",
-	status : "open",
-	date_from : "YYYY-MM-DD",		//optional
-	date_to	  : "YYYY-MM-DD",		//optional
-	}
-	</pre>
 	<h4>Sample Response:</h4>
 	<pre>
 	{
-	id: 8,
-	status: complete,
-	api_key : "MY_API_KEY",
-	created_date : "YYYY-MM-DD HH:MM:SS"
-	task_type: "audio_to_text",
-	language : {
-			language_from: "Mandarin",
-			language_from_dialect : "Dialect",
-			language_from_accent  : "Accent",
-			language_to: "Mandarin",
-			language_to_dialect : "Dialect",
-			language_from_accent  : "Accent",
-		}
-	gender {
-		gender_from: "Male"
-		gender_to  : "Male"
-	}
-
-	asset_from : { 
-			file_url: "https://s3.com/file_orig.mp3",
-			file_type: mpeg/audio,
-			gender: "Male"
-			file_size: "10234",
-			file_length_in_minutes, "3",
-			}
-	asset_to : {
-			file_url: "https://s3.com/file_dest.mp3",
-			file_type: "mpeg/audio",
-			gender: "Male"
-			file_size: "10234",
-			file_length_in_minutes, "3",
-			}
-	special_instructions : "some instructions",
+		"id":1,
+		"created_at":"2012-09-21T19:10:12-04:00",
+		"status":"open"
 	}
 	</pre>
 	
@@ -229,27 +164,27 @@
 	<h3>Get task</h3>
 	<small>Get envelope for a specific task</small>
 	<h4>Resource:</h4>
-	<p class='method-path'>/tasks/task_id - GET</p>
+	<p class='method-path'>/tasks/:task_id - GET</p>
+	
+	<h4>Parameters:</h4>
+	<table>
+		<tr><td class='parameter-name'>api_key (required)</td><td>Your application API key</td></tr>
+		<tr><td class='parameter-name'>task_id (required)</td><td>id of the task to retrieve</td></tr>
+		<tr><td class='parameter-name'>date_from (optional)</td><td>"YYYY-MM-DD"</td></tr>
+		<tr><td class='parameter-name'>date_to (optional)</td><td>"YYYY-MM-DD"</td></tr>
+	</table>
 
 	<h4>Sample Request (URI Parameters or Request Body OK):</h4>
 	<div class="row">
 	  <div class="span1" style="text-align:center"><strong>GET</strong></div>
-	  <div class="span10">https://api.verbalizeit.com/tasks/task_id</div>
+	  <div class="span10">https://api.verbalizeit.com/tasks/1234?api_key=YOUR_API_KEY</div>
 	</div>
-	<pre>
-	{
- 	api_key : "MY_API_KEY",
-	task_id : "1234",
-	date_from : "YYYY-MM-DD",		//optional
-	date_to	  : "YYYY-MM-DD",		//optional
-	}
-	</pre>
 	<h4>Sample Response:</h4>
 	<pre>
 	{
 	id: 1234,
 	status: complete,
-	api_key : "MY_API_KEY",
+	api_key : "YOUR_API_KEY",
 	created_date : "YYYY-MM-DD HH:MM:SS"
 	task_type: "audio_to_text",
 	language : {
@@ -295,43 +230,27 @@
 	<h4>Resource:</h4>
 	<p class='method-path'>/tasks - POST</p>
 
-	<h4>Sample Request (URI Parameters or Request Body OK):</h4>
+	<h4>Sample Request (Request Body):</h4>
 	<div class="row">
 	  <div class="span1" style="text-align:center"><strong>POST</strong></div>
 	  <div class="span10">https://api.verbalizeit.com/tasks/task_id</div>
 	</div>
 	<pre>
 	{
-	api_key : "MY_API_KEY",
-	job_id : "my_job_id",			// optional, response from POST /job/create  
-  	task_type: "audio_to_text",
-	asset : {
-			asset_type : file                    // file or url
-			asset_path: "path_to_file_or_url",
-			gender : "Male",			// "Male", "Female", "None"
-			language : "Mandarin"		// optional			
-			}
-	language : {
-			language_from: "Mandarin",
-			language_from_dialect : "Dialect",
-			language_from_accent  : "Accent",
-			language_to: "Mandarin",
-			language_to_dialect : "Dialect",
-			language_from_accent  : "Accent",
-			}
-	gender_to : "Male",
-	special_instructions : "some instructions"
-	}
-	postback : { TBD }					//Oauth token, url
-	supporting_resources : { TBD }				// video url, extra docs url(s)
+		workflow=>"1",
+		job_id=>"40",
+		asset : {				
+				asset_path: "path_to_file_or_url",	
+				}
+		override_instructions : "some instructions"
+		}
 	}
 	</pre>
 	<h4>Sample Response:</h4>
 	<pre>
 	{
-	api_key : "MY_API_KEY"
-	job_id  : ""   		      // null if not set (see jobs documentation)
-	task_id : "1234567"
+		"id"=>161, 
+		"created_at":"2012-09-21T19:10:12-04:00"
 	}
 	</pre>
 </div><!--END apiResourceIndent-->
@@ -351,6 +270,12 @@
 	<h4>Resource:</h4>
 	<p class='method-path'>/jobs - GET</p>
 
+	<h4>Parameters:</h4>
+	<table>
+		<tr><td class='parameter-name'>api_key (required)</td><td>Your application API key</td></tr>
+		<tr><td class='parameter-name'>date_from (optional)</td><td>"YYYY-MM-DD"</td></tr>
+		<tr><td class='parameter-name'>date_to (optional)</td><td>"YYYY-MM-DD"</td></tr>
+	</table>
 	<h4>Sample Request (URI Parameters or Request Body OK):</h4>
 	<div class="row">
 	  <div class="span1" style="text-align:center"><strong>GET</strong></div>
@@ -358,7 +283,7 @@
 	</div>
 	<pre>
 	{
-	api_key : "MY_API_KEY",
+	api_key : "YOUR_API_KEY",
 	date_from : "YYYY-MM-DD",		//optional
 	date_to	  : "YYYY-MM-DD",		//optional
 	}
@@ -366,11 +291,15 @@
 	<h4>Sample Response:</h4>
 	<pre>
 	{
-	id: 8,
-	file_count: 10,
-	percent_complete: "40%",
-	task_status_summary: {open: 3, in_progress: 3, bad_file: 2, complete: 2),
-	batch_total_minutes: 112
+	"id":40,
+	"created_at":"2012-09-28T12:39:23-04:00",
+	"description":"Job Name #55",
+	"summary":{
+		"open":0,
+		"in_progress":0,
+		"in_review":0,
+		"complete":0
+		}
 	}
 	</pre>
 </div><!--END apiResourceIndent-->
@@ -382,42 +311,51 @@
 	<h3>Get tasks by job</h3>
 	<small>Get all task envelopes by job</small>
 	<h4>Resource:</h4>
-	<p class='method-path'>/jobs/job_id - GET</p>
+	<p class='method-path'>/jobs/:job_id - GET</p>
 
-	<h4>Sample Request (URI Parameters or Request Body OK):</h4>
+	<h4>Parameters:</h4>
+	<table>
+		<tr><td class='parameter-name'>api_key (required)</td><td>Your application API key</td></tr>
+		<tr><td class='parameter-name'>job_id (required)</td><td>the id of the job to retrieve</td></tr>
+	</table>
+	<h4>Sample Request (URI Parameters):</h4>
 	<div class="row">
 	  <div class="span1" style="text-align:center"><strong>GET</strong></div>
-	  <div class="span10">https://api.verbalizeit.com/jobs</div>
+	  <div class="span10">https://api.verbalizeit.com/jobs/40?api_key=YOUR_API_KEY</div>
 	</div>
-	<pre>
-	{	
-	api_key : "MY_API_KEY",
-	job_id : "1234",
-	}
-	</pre>
+
 	<h4>Sample Response:</h4>
 	<pre>
 	{
-	id: 1234,
-	file_count: 10,
-	percent_complete: "40%",
-	task_status_summary: {open: 3, in_progress: 3, bad_file: 2, complete: 2),
-	batch_total_minutes: 112
+		"id":40,
+		"created_at":"2012-09-28T12:39:23-04:00",
+		"description":"Job Name #55",
+		"ids":[ 150
+		]
 	}
 	</pre>
 </div><!--END apiResourceIndent-->
 <hr class="apiDivider">
 
 
-
+<!--
 
 <div class="apiResourceIndent">
 	<a name="get_all_task_job_status"></a>
 	<h3>Get tasks by status</h3>
-	<small>Get all tasks in status by job</small>
+	<small>Get all tasks in Job by status</small>
 	<h4>Resource:</h4>
 	<p class='method-path'>/jobs/tasks/:status - GET</p>
 
+	<h4>Parameters:</h4>
+	<table>
+		<tr><td class='parameter-name'>api_key (required)</td><td>Your application API key</td></tr>
+		<tr><td class='parameter-name'>status (required)</td><td>open, in_progress, in_review, or complete</td></tr>
+		<tr><td class='parameter-name'>job_id (required)</td><td>the id of the job to retrieve</td></tr>
+		<tr><td class='parameter-name'>date_from (optional)</td><td>"YYYY-MM-DD"</td></tr>
+		<tr><td class='parameter-name'>date_to (optional)</td><td>"YYYY-MM-DD"</td></tr>
+	</table>
+	
 	<h4>Sample Request (URI Parameters or Request Body OK):</h4>
 	<div class="row">
 	  <div class="span1" style="text-align:center"><strong>GET</strong></div>
@@ -425,7 +363,7 @@
 	</div>
 	<pre>
 	{
-	api_key : "MY_API_KEY",
+	api_key : "YOUR_API_KEY",
 	job_id : "1234",
 	date_from : "YYYY-MM-DD",		optional
 	date_to	  : "YYYY-MM-DD",		optional
@@ -441,8 +379,8 @@
 			]
 	}
 	</pre>
-</div><!--END apiResourceIndent-->
-<hr class="apiDivider">
+</div><!--END apiResourceIndent
+<hr class="apiDivider">-->
 
 
 
@@ -452,27 +390,55 @@
 	<small>Create a non-live translation job</small>
 	<h4>Resource:</h4>
 	<p class='method-path'>/jobs - POST</p>
-
+		<h4>Parameters:</h4>
+	<table>
+		<tr><td class='parameter-name'>api_key (required)</td><td>Your application API key</td></tr>
+		<tr><td class='parameter-name'>job_name (required)</td><td>the name for your job</td></tr>
+	</table>
+	
 	<h4>Sample Request (URI Parameters or Request Body OK):</h4>
 	<div class="row">
 	  <div class="span1" style="text-align:center"><strong>POST</strong></div>
-	  <div class="span10">https://api.verbalizeit.com/jobs</div>
+	  <div class="span10">https://api.verbalizeit.com/jobs?job_name=JobName#55&api_key=YOUR_API_KEY</div>
 	</div>
-	<pre>
-	{
-	api_key : "MY_API_KEY"
-	job_name : "my first job"
-	}
-	</pre>
+
 	<h4>Sample Response:</h4>
 	<pre>
 	{
-	job_id : "1234"
+		"id"=>40,
+		"created_at"=>"2012-09-28T12:39:23-04:00",
+		"description"=>"JobName#55"
 	}
 	</pre>
 </div><!--END apiResourceIndent-->
 <hr class="apiDivider">
 
+
+<div class="apiResourceIndent">
+	<a name="get_workflows"></a>
+	<h3>Get Workflows</h3>
+	<small>?????????????????</small>
+	<h4>Resource:</h4>
+	<p class='method-path'>/workflows - GET</p>
+		<h4>Parameters:</h4>
+	<table>
+		<tr><td class='parameter-name'>api_key (required)</td><td>Your application API key</td></tr>
+	</table>
+	
+	<h4>Sample Request (URI Parameters):</h4>
+	<div class="row">
+	  <div class="span1" style="text-align:center"><strong>POST</strong></div>
+	  <div class="span10">https://api.verbalizeit.com/workflows&api_key=YOUR_API_KEY</div>
+	</div>
+
+	<h4>Sample Response:</h4>
+	<pre>
+	{
+		"id":1,
+		"name":"Workflow - Male Transcription"
+	}
+	</pre>
+</div><!--END apiResourceIndent-->
 
     <!-- Le javascript
     ================================================== -->
